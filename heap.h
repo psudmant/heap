@@ -15,6 +15,7 @@ class test_data{
         int data;
         test_data(int);
         ~test_data();
+        bool operator<(test_data &);
         void print();
 };
 
@@ -28,7 +29,7 @@ class heap_element{
          
         heap_element(void *);
         ~heap_element();
-        bool operator<(heap_element *);
+        bool operator<(heap_element &);
 
         heap_element * get_parent();
         heap_element * get_child();
@@ -37,7 +38,8 @@ class heap_element{
 class heap{
     
     private:
-         heap_element *elements;
+         heap_element **elements;
+         int curr_size;
     public:
         
         heap(int);
