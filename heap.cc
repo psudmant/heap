@@ -36,7 +36,6 @@ bool heap_element::operator<(heap_element *other_elem){
     }else{
         return false;
     }
-
 }
 
 
