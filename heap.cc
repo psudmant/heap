@@ -12,73 +12,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-/*
- * test_data
- */
-test_data::test_data(int _data){
-    data = _data;
-}
-
-void test_data::print(){
-   printf("%d\n",data); 
-}
-
-
-
 /*
  * heap_element
  */
 
-heap_element::heap_element(void * _data){
+template <class T>
+heap_element<T>::heap_element(T _data){
     data = _data;
 }
 
-bool test_data::operator<(test_data &other){
+template <class T>
+bool heap_element<T>::operator<(heap_element &other){
     if (data<other.data){
         return true;
     }else{
         return false;
     }
-
 }
 
-heap_element::~heap_element(){
-
-}
-
-bool heap_element::operator<(heap_element &other){
-    
-    if (data < other.data){
-        return true;
-    }else{
-        return false;
-    }
+template <class T>
+heap_element<T>::~heap_element(){
 }
 
 /*
  * heap
  */
 
-heap::heap(int heap_size){
-    elements = new heap_elements*[heap_size];
+template <class T>
+heap<T>::heap(int heap_size){
+    
+    elements = new heap_element<T>*[heap_size];
     curr_size = 0;
 }
 
-
+template <class T>
+heap<T>::~heap(){
+}
 
 int main(){
     
     printf("up and running\n");
     
-    heap_element **heap_elems = new heap_element*[10];  
+    heap_element<int> **heap_elems = new heap_element<int>*[10];  
 
     for (int i=0;i<10;i++){
         
-        test_data *d = new test_data(i%3);
-        heap_elems[i] = new heap_element(d);
-        ((test_data*)heap_elems[i]->data)->print();
+        heap_elems[i] = new heap_element<int>(i%3);
+        if (i>0){
+            int e1 = heap_elems[i]->data;
+            int e2 = heap_elems[i-1]->data;
+
+            if (*heap_elems[i]<*heap_elems[i-1]){
+                printf("\t %d is < %d\n",e1,e2);
+            }else{
+                printf("\t %d !< %d\n",e1,e2);
+            }
+        } 
     }
 
 }

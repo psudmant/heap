@@ -9,25 +9,15 @@
  * email        : psudmant [ a t ] gmail [ d o t ] com 
  */
 
-class test_data{
-    
-    public:
-        int data;
-        test_data(int);
-        ~test_data();
-        bool operator<(test_data &);
-        void print();
-};
-
-
+template <class T>
 class heap_element{
     
     public:
 
-        void *data;     //a pointer to the actual data element
+        T data;     //the actual data element
         unsigned int node_idx;  //this elements node
          
-        heap_element(void *);
+        heap_element(T);
         ~heap_element();
         bool operator<(heap_element &);
 
@@ -35,20 +25,21 @@ class heap_element{
         heap_element * get_child();
 };
 
+template <class T>
 class heap{
     
     private:
-         heap_element **elements;
+         heap_element<T> **elements;
          int curr_size;
     public:
         
         heap(int);
         ~heap();
-        int push(heap_element *);
-        int pop(heap_element *);
+        int push(heap_element<T> *);
+        int pop(heap_element<T> *);
         int pop(int);
-        heap_element * get_parent(int);
-        heap_element * get_child(int);
+        heap_element<T> * get_parent(int);
+        heap_element<T> * get_child(int);
 
 };
 
