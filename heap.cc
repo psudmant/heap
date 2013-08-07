@@ -43,6 +43,19 @@ heap<T>::heap(int heap_size){
     
     elements = new heap_element<T>*[heap_size];
     curr_size = 0;
+    max_size = heap_size;
+}
+
+template <class T>
+heap<T>::push(heap_element<T> *e){
+    
+    if (curr_size==max_size){
+        printf("heap must be resized\n");
+        return;
+    }
+    
+    elements[curr_size] = e;
+    curr_size++;
 }
 
 template <class T>
@@ -53,21 +66,15 @@ int main(){
     
     printf("up and running\n");
     
-    heap_element<int> **heap_elems = new heap_element<int>*[10];  
+    heap<int> *my_heap = new heap<int>(10);
+
+    //heap_element<int> **heap_elems = new heap_element<int>*[10];  
 
     for (int i=0;i<10;i++){
         
-        heap_elems[i] = new heap_element<int>(i%3);
-        if (i>0){
-            int e1 = heap_elems[i]->data;
-            int e2 = heap_elems[i-1]->data;
+        heap_element<int> *heap_elem = new heap_element<int>(i%3);
+        my_heap->push(heap_elem); 
 
-            if (*heap_elems[i]<*heap_elems[i-1]){
-                printf("\t %d is < %d\n",e1,e2);
-            }else{
-                printf("\t %d !< %d\n",e1,e2);
-            }
-        } 
     }
 
 }

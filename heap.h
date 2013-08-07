@@ -31,6 +31,7 @@ class heap{
     private:
          heap_element<T> **elements;
          int curr_size;
+         int max_size;
     public:
         
         heap(int);
