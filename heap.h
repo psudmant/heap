@@ -29,18 +29,33 @@ template <class T>
 class heap{
     
     private:
-         heap_element<T> **elements;
-         int curr_size;
-         int max_size;
+        heap_element<T> **elements;
+        
+        int heapify_up(heap_element<T>*);
+        int heapify_up(int);
+        int heapify_down(heap_element<T>*);
+        int heapify_down(int);
+        int swap(int, int);
+
+        int curr_size;
+        int max_size;
+        
     public:
         
         heap(int);
         ~heap();
-        int push(heap_element<T> *);
-        int pop(heap_element<T> *);
-        int pop(int);
-        heap_element<T> * get_parent(int);
-        heap_element<T> * get_child(int);
+        int insert(heap_element<T> *);
+        int del(heap_element<T> *);
+        int del(int);
+
+        void print(); 
+
+        heap_element<T> * get_parent(heap_element<T>*);
+        heap_element<T> * get_left_child(heap_element<T>*);
+        heap_element<T> * get_right_child(heap_element<T>*);
+        int get_parent(int);
+        int get_left_child(int);
+        int get_right_child(int);
 
 };
 
