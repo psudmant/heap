@@ -36,6 +36,8 @@ class heap{
         int heapify_down(heap_element<T>*);
         int heapify_down(int);
         int swap(int, int);
+        
+        int get_min_child(int);
 
         int curr_size;
         int max_size;
@@ -48,7 +50,7 @@ class heap{
         int del(heap_element<T> *);
         int del(int);
 
-        void print(); 
+        void print(int,int); 
 
         heap_element<T> * get_parent(heap_element<T>*);
         heap_element<T> * get_left_child(heap_element<T>*);
