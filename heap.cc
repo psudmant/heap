@@ -63,6 +63,22 @@ int heap<T>::get_right_child(int node_idx){
 }
 
 template <class T>
+heap_element<T>* heap<T>::get_right_child(heap_element<T> * elem){
+    return elements[get_right_child(elem->node_idx)];
+}
+
+template <class T>
+heap_element<T>* heap<T>::get_parent(heap_element<T> * elem){
+    return elements[get_parent(elem->node_idx)];
+}
+
+template <class T>
+heap_element<T>* heap<T>::get_left_child(heap_element<T> * elem){
+    return elements[get_left_child(elem->node_idx)];
+}
+
+
+template <class T>
 int heap<T>::insert(heap_element<T> *e){
     
     int ret_val;
@@ -113,6 +129,12 @@ int heap<T>::heapify_up(int node_idx){
        }
     }
 }
+
+template <class T>
+int heap<T>::del(heap_element<T> *elem){
+    return del(elem->node_idx);
+}
+
 
 template <class T>
 int heap<T>::del(int idx){

@@ -31,9 +31,7 @@ class heap{
     private:
         heap_element<T> **elements;
         
-        int heapify_up(heap_element<T>*);
         int heapify_up(int);
-        int heapify_down(heap_element<T>*);
         int heapify_down(int);
         int swap(int, int);
         
@@ -55,6 +53,7 @@ class heap{
         heap_element<T> * get_parent(heap_element<T>*);
         heap_element<T> * get_left_child(heap_element<T>*);
         heap_element<T> * get_right_child(heap_element<T>*);
+        
         int get_parent(int);
         int get_left_child(int);
         int get_right_child(int);
