@@ -221,17 +221,16 @@ void heap<T>::print_h(){
 
         step_size = (n_slots/((1<<(i+1))));
         elements_on_level = (1<<(i+1)) <= curr_size ? 
-                                                    1<<i : 
-                                                    curr_size-((1<<i)-1); 
+                                               1<<i : 
+                                               curr_size-((1<<i)-1); 
         sprintf(l_str,"");
         for (int k=0; k<elements_on_level;k++){
             curr_idx=((1<<i)-1)+k;
-            left_pad = k==0 ? 
-                            var_width+(var_width*step_size) :
-                            (2 * var_width * step_size); 
+            left_pad = k==0 ? var_width+(var_width*step_size) : 
+                                   (2 * var_width * step_size); 
 
             sprintf(l_str,"%s%*.*d",l_str,left_pad,var_width,
-                                                    elements[curr_idx]->data);
+                                   elements[curr_idx]->data);
         }
         printf("%s\n",l_str);
     }
