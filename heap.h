@@ -49,6 +49,7 @@ class heap{
         int del(int);
 
         void print(int,int); 
+        void print_h(); 
 
         heap_element<T> * get_parent(heap_element<T>*);
         heap_element<T> * get_left_child(heap_element<T>*);

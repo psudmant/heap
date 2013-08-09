@@ -196,34 +196,38 @@ int heap<T>::heapify_down(int node_idx){
 }
 
 
-/*
 template <class T>
-void heap<T>::print(){
+void heap<T>::print_h(){
     
     //0 depth tree just has the root
     int depth, 
         n_slots,
         curr_idx,
         step_size,
-        elements_on_level;
+        elements_on_level,
+        left_pad,
+        var_width;
     
-    char str = ' ';
+    char l_str [1024]; 
+
+    var_width=2;
+    
     depth = (int)floor(log(curr_size)/log(2));
-    n_slots = ((1<<(depth+1))-1)*2;
+    n_slots = ((1<<(depth+1)))*1;
     
     for (int i=0; i<depth+1; i++){
-       step_size = n_slots/((1<<i)+1);
-       
-       elements_on_level= (1<<(i+1)) < curr_size ? 1<<i : curr_size-((1<<i)-1); 
-       for (int k=0; k<elements_on_level;k++){
-           curr_idx=((1<<i)-1)+k;
-           printf("%*d",step_size,elements[curr_idx]->data);
-           //printf("%*d",step_size+1,curr_idx);
-       }
-       printf("\n");
+
+        step_size = (n_slots/((1<<(i+1))));
+        elements_on_level = (1<<(i+1)) <= curr_size ? 1<<i : curr_size-((1<<i)-1); 
+        sprintf(l_str,"");
+        for (int k=0; k<elements_on_level;k++){
+            curr_idx=((1<<i)-1)+k;
+            left_pad = k==0 ? var_width+(var_width*step_size) : (2 * var_width * step_size);
+            sprintf(l_str,"%s%*.*d",l_str,left_pad,var_width,elements[curr_idx]->data);
+        }
+        printf("%s\n",l_str);
     }
 }
-*/
 
 template <class T>
 void heap<T>::print(int idx, int indent){
@@ -246,24 +250,18 @@ int main(){
     
     int ret_val,indent;
     
-    heap<int> *my_heap = new heap<int>(30);
+    heap<int> *my_heap = new heap<int>(50);
 
-    //heap_element<int> **heap_elems = new heap_element<int>*[10];  
 
-    for (int i=0;i<30;i++){
-        heap_element<int> *heap_elem = new heap_element<int>(i%7);
+    for (int i=0;i<50;i++){
+        heap_element<int> *heap_elem = new heap_element<int>(i%17);
         ret_val = my_heap->insert(heap_elem); 
     }
     indent=0; 
-    my_heap->print(0,indent);
+    my_heap->print_h();
 
     my_heap->del(3);
-    printf("----------------\n");
-    my_heap->print(0,indent);
+    my_heap->print_h();
     
-    my_heap->del(22);
-    printf("----------------\n");
-    my_heap->print(0,indent);
-
 }
 
