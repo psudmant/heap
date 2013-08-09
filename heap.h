@@ -14,15 +14,14 @@ class heap_element{
     
     public:
 
+        heap_element(T);
+        ~heap_element();
+        
         T data;     //the actual data element
         unsigned int node_idx;  //this elements node
          
-        heap_element(T);
-        ~heap_element();
-        bool operator<(heap_element &);
+        bool operator<(heap_element<T> &);
 
-        heap_element * get_parent();
-        heap_element * get_child();
 };
 
 template <class T>
@@ -45,10 +44,10 @@ class heap{
         heap(int);
         ~heap();
         int insert(heap_element<T> *);
-        int del(heap_element<T> *);
-        int del(int);
+        int remove(heap_element<T> *);
+        int remove(int);
 
-        void print(int,int); 
+        void print_v(int,int); 
         void print_h(); 
 
         heap_element<T> * get_parent(heap_element<T>*);

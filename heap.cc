@@ -103,7 +103,7 @@ int heap<T>::insert(heap_element<T> *e){
 template <class T>
 int heap<T>::swap(int idx1, int idx2){
     
-    heap_element<T> *elem1, *elem2;
+    heap_element<T> *elem1;
     elem1 = elements[idx1];
     elements[idx1] = elements[idx2];
     elements[idx2] = elem1;
@@ -116,7 +116,7 @@ int heap<T>::swap(int idx1, int idx2){
 template <class T>
 int heap<T>::heapify_up(int node_idx){
     
-    int ret_val, parent; 
+    int parent; 
     parent = get_parent(node_idx); 
 
     while (parent!=0 && (*elements[node_idx] < *elements[parent])){
@@ -128,16 +128,17 @@ int heap<T>::heapify_up(int node_idx){
             exit(1);
        }
     }
+    return 0;
 }
 
 template <class T>
-int heap<T>::del(heap_element<T> *elem){
-    return del(elem->node_idx);
+int heap<T>::remove(heap_element<T> *elem){
+    return remove(elem->node_idx);
 }
 
 
 template <class T>
-int heap<T>::del(int idx){
+int heap<T>::remove(int idx){
     
     int ret_val;
 
@@ -223,7 +224,7 @@ void heap<T>::print_h(){
         elements_on_level = (1<<(i+1)) <= curr_size ? 
                                                1<<i : 
                                                curr_size-((1<<i)-1); 
-        sprintf(l_str,"");
+        l_str[0]  = '\0';
         for (int k=0; k<elements_on_level;k++){
             curr_idx=((1<<i)-1)+k;
             left_pad = k==0 ? var_width+(var_width*step_size) : 
@@ -237,15 +238,15 @@ void heap<T>::print_h(){
 }
 
 template <class T>
-void heap<T>::print(int idx, int indent){
+void heap<T>::print_v(int idx, int indent){
     if (get_right_child(idx)!=-1){
-        print(get_right_child(idx),indent+1);
+        print_v(get_right_child(idx),indent+1);
     }
 
     printf("%*d-%d\n",indent*4,elements[idx]->data,elements[idx]->node_idx);
     
     if (get_left_child(idx)!=-1){
-        print(get_left_child(idx),indent+1);
+        print_v(get_left_child(idx),indent+1);
     }
 }
 
@@ -267,7 +268,7 @@ int main(){
     indent=0; 
     my_heap->print_h();
 
-    my_heap->del(3);
+    my_heap->remove(3);
     my_heap->print_h();
     
 }
