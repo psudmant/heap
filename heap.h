@@ -1,4 +1,3 @@
-
 /* a min heap with the ability to 
  * remove arbitary elements from the 
  * heap
@@ -8,6 +7,9 @@
  * Author       : Peter H Sudmant
  * email        : psudmant [ a t ] gmail [ d o t ] com 
  */
+
+#ifndef HEAP_H 
+#define HEAP_H
 
 template <class T>
 class heap_element{
@@ -52,7 +54,7 @@ class heap{
         int remove(heap_element<T> *);
         int remove(int);
 
-        void print_v(int,int); 
+        void print_v(int, int, int); 
         void print_h(int); 
 
         heap_element<T> * get_parent(heap_element<T>*);
@@ -65,3 +67,4 @@ class heap{
 
 };
 
+#endif

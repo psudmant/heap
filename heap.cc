@@ -13,6 +13,12 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <sstream>
+
+
 /*
  * heap_element
  */
@@ -243,7 +249,7 @@ void heap<T>::print_h(int var_width){
     int max_depth=5;
     
     char l_str [4096]; 
-    char valStr [128]; 
+    //char valStr [128]; 
      
     depth = (int)floor(log(curr_size)/log(2));
     depth = depth<max_depth ? depth : max_depth;
@@ -261,27 +267,33 @@ void heap<T>::print_h(int var_width){
             curr_idx=((1<<i)-1)+k;
             left_pad = k==0 ? var_width+(var_width*step_size) : 
                        (2 * var_width * step_size); 
-            elements[curr_idx]->data.getValStr(var_width,valStr);
-            sprintf(l_str,"%s%*.*s",l_str,left_pad,var_width,valStr);
+            std::stringstream buf;
+            buf << std::fixed << std::setw( var_width ) 
+                << std::setprecision( var_width )
+                << elements[curr_idx]->data; 
+            sprintf(l_str,"%s%*.*s",l_str,left_pad,var_width,buf.str().c_str());
         }
         printf("%s\n",l_str);
     }
 }
 
 template <class T>
-void heap<T>::print_v(int idx, int indent){
+void heap<T>::print_v(int idx, int indent, int var_width){
     
-    char valStr[128];
-
     if (get_right_child(idx)!=-1){
-        print_v(get_right_child(idx),indent+1);
+        print_v( get_right_child(idx), indent+1, var_width );
     }
 
-    elements[idx]->data.getValStr(5,valStr);
-    printf("%*d-%d\n",indent*4,elements[idx]->data,elements[idx]->node_idx);
+    std::stringstream buf;
+    buf << std::fixed << std::setw( var_width ) 
+        << std::setprecision( var_width )
+        << elements[idx]->data; 
+    //elements[idx]->data.getValStr(5,valStr);
+    printf("%*s-%d\n",indent*4,buf.str().c_str(),elements[idx]->node_idx);
+    //printf("%*d-%d\n",indent*4,0);
     
     if (get_left_child(idx)!=-1){
-        print_v(get_left_child(idx),indent+1);
+        print_v( get_left_child(idx), indent+1, var_width );
     }
 }
 
