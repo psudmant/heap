@@ -15,6 +15,7 @@ class heap_element{
     public:
 
         heap_element(T);
+        heap_element();
         ~heap_element();
         
         T data;     //the actual data element
@@ -41,14 +42,18 @@ class heap{
         
     public:
         
+        heap();
+        //heap(const heap<T> &);
         heap(int);
+        void init_heap(int);
         ~heap();
+        
         int insert(heap_element<T> *);
         int remove(heap_element<T> *);
         int remove(int);
 
         void print_v(int,int); 
-        void print_h(); 
+        void print_h(int); 
 
         heap_element<T> * get_parent(heap_element<T>*);
         heap_element<T> * get_left_child(heap_element<T>*);

@@ -23,7 +23,15 @@ heap_element<T>::heap_element(T _data){
 }
 
 template <class T>
-bool heap_element<T>::operator<(heap_element &other){
+heap_element<T>::heap_element(){
+}
+
+template <class T>
+heap_element<T>::~heap_element(){
+}
+
+template <class T>
+bool heap_element<T>::operator<(heap_element<T> &other){
     if (data<other.data){
         return true;
     }else{
@@ -31,13 +39,21 @@ bool heap_element<T>::operator<(heap_element &other){
     }
 }
 
-template <class T>
-heap_element<T>::~heap_element(){
-}
-
 /*
  * heap
  */
+
+template <class T>
+void heap<T>::init_heap(int heap_size){
+    
+    elements = new heap_element<T>*[heap_size];
+    curr_size = 0;
+    max_size = heap_size;
+}
+
+template <class T>
+heap<T>::heap(){
+}
 
 template <class T>
 heap<T>::heap(int heap_size){
@@ -46,6 +62,20 @@ heap<T>::heap(int heap_size){
     curr_size = 0;
     max_size = heap_size;
 }
+
+
+/*template <class T>
+heap<T>::heap(const heap<T>& other){
+    other.curr_size=curr_size;
+    other.max_size=max_size;
+    other.elements = elements;
+}*/
+
+template <class T>
+heap<T>::~heap(){
+    delete elements;
+}
+
 
 template <class T>
 int heap<T>::get_parent(int node_idx){
@@ -119,7 +149,7 @@ int heap<T>::heapify_up(int node_idx){
     int parent; 
     parent = get_parent(node_idx); 
 
-    while (parent!=0 && (*elements[node_idx] < *elements[parent])){
+    while (node_idx!=0 && (*elements[node_idx] < *elements[parent])){
        if (swap(node_idx,parent)==0){
            node_idx = parent;
            parent = get_parent(node_idx); 
@@ -200,7 +230,7 @@ int heap<T>::heapify_down(int node_idx){
 
 
 template <class T>
-void heap<T>::print_h(){
+void heap<T>::print_h(int var_width){
     
     //0 depth tree just has the root
     int depth, 
@@ -208,14 +238,16 @@ void heap<T>::print_h(){
         curr_idx,
         step_size,
         elements_on_level,
-        left_pad,
-        var_width;
+        left_pad;
+         
+    int max_depth=5;
     
-    char l_str [1024]; 
-
-    var_width=2;
-    
+    char l_str [4096]; 
+    char valStr [128]; 
+     
     depth = (int)floor(log(curr_size)/log(2));
+    depth = depth<max_depth ? depth : max_depth;
+
     n_slots = ((1<<(depth+1)))*1;
     
     for (int i=0; i<depth+1; i++){
@@ -229,9 +261,8 @@ void heap<T>::print_h(){
             curr_idx=((1<<i)-1)+k;
             left_pad = k==0 ? var_width+(var_width*step_size) : 
                        (2 * var_width * step_size); 
-
-            sprintf(l_str,"%s%*.*d",l_str,left_pad,var_width,
-                    elements[curr_idx]->data);
+            elements[curr_idx]->data.getValStr(var_width,valStr);
+            sprintf(l_str,"%s%*.*s",l_str,left_pad,var_width,valStr);
         }
         printf("%s\n",l_str);
     }
@@ -239,10 +270,14 @@ void heap<T>::print_h(){
 
 template <class T>
 void heap<T>::print_v(int idx, int indent){
+    
+    char valStr[128];
+
     if (get_right_child(idx)!=-1){
         print_v(get_right_child(idx),indent+1);
     }
 
+    elements[idx]->data.getValStr(5,valStr);
     printf("%*d-%d\n",indent*4,elements[idx]->data,elements[idx]->node_idx);
     
     if (get_left_child(idx)!=-1){
@@ -250,26 +285,4 @@ void heap<T>::print_v(int idx, int indent){
     }
 }
 
-template <class T>
-heap<T>::~heap(){
-}
-
-int main(){
-    
-    int ret_val,indent;
-    
-    heap<int> *my_heap = new heap<int>(50);
-
-
-    for (int i=0;i<50;i++){
-        heap_element<int> *heap_elem = new heap_element<int>(i%17);
-        ret_val = my_heap->insert(heap_elem); 
-    }
-    indent=0; 
-    my_heap->print_h();
-
-    my_heap->remove(3);
-    my_heap->print_h();
-    
-}
 
