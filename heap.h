@@ -57,10 +57,14 @@ class heap{
         void print_v(int, int, int); 
         void print_h(int); 
 
+        T peek_element(int); 
+
         heap_element<T> * get_parent(heap_element<T>*);
         heap_element<T> * get_left_child(heap_element<T>*);
         heap_element<T> * get_right_child(heap_element<T>*);
         
+        heap_element<T> * get_element(int); 
+
         int get_parent(int);
         int get_left_child(int);
         int get_right_child(int);

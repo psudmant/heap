@@ -82,6 +82,15 @@ heap<T>::~heap(){
     delete elements;
 }
 
+template <class T>
+T heap<T>::peek_element(int node_idx){
+    return elements[node_idx]->data;
+}
+
+template <class T>
+heap_element<T>* heap<T>::get_element(int node_idx){
+    return elements[node_idx];
+}
 
 template <class T>
 int heap<T>::get_parent(int node_idx){
@@ -128,7 +137,7 @@ int heap<T>::insert(heap_element<T> *e){
     e->node_idx=curr_size;
     curr_size++;
     
-    if (curr_size==0){
+    if (curr_size==1){
         return 0;
     }else{
         ret_val = heapify_up(curr_size-1);     
@@ -179,7 +188,7 @@ int heap<T>::remove(int idx){
     int ret_val;
 
     if (idx>=curr_size){
-        printf("element not in heap\n");
+        printf("element %d not in heap\n",idx);
         return -1;
     }
     
