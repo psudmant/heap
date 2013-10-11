@@ -147,7 +147,7 @@ int heap<T>::insert(heap_element<T> *e){
 
 template <class T>
 int heap<T>::swap(int idx1, int idx2){
-    
+    //printf("swap %d %d\n",idx1,idx2); 
     heap_element<T> *elem1;
     elem1 = elements[idx1];
     elements[idx1] = elements[idx2];
@@ -181,6 +181,16 @@ int heap<T>::remove(heap_element<T> *elem){
     return remove(elem->node_idx);
 }
 
+template <class T>
+int heap<T>::heap_integrity(){
+    for (int i = 0; i<curr_size;i++){
+        if (elements[i]->node_idx != i){
+            printf("FAIL! at %d has val %d\n",i,elements[i]->node_idx);
+            return -1;
+        }
+    }
+    return 0;
+}
 
 template <class T>
 int heap<T>::remove(int idx){
@@ -194,9 +204,13 @@ int heap<T>::remove(int idx){
     
     if (curr_size==0){
         return 0;
-    }else{
+    }else if (idx == curr_size-1){
+        curr_size--;
+        return 0;
+    }else{ 
         curr_size--;
         elements[idx] = elements[curr_size];
+        elements[idx]->node_idx = idx;
         if ((idx == 0) || !( *elements[idx] < *elements[get_parent(idx)] ) ){
             ret_val = heapify_down(idx);
         } else {

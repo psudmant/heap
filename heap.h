@@ -68,6 +68,7 @@ class heap{
         int get_parent(int);
         int get_left_child(int);
         int get_right_child(int);
+        int heap_integrity();
 
 };
 
