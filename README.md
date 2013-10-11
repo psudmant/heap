@@ -5,4 +5,3 @@ a min-heap implementation with support for
 * arbitrary removals
 * cython hooks
 
-test
